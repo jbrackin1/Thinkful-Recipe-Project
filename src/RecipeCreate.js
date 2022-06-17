@@ -1,90 +1,89 @@
 import React, { useState } from "react";
 
-function RecipeCreate({createRecipe}) {
- 
+function RecipeCreate({ createRecipe }) {
   const initialFormState = {
-    name:"",
-    cuisine:"",
-    photo:"",
-    ingredients:"",
-    preparation:"",
-  };
-  
-  const [content, setContent] = useState({...initialFormState});
-
-  
-  const handleChange = ({target}) => {
-    const value = target.value;
-    setContent({
-      ...content,
-      [target.name]: value,
-    });
+    name: "",
+    cuisine: "",
+    photo: "",
+    ingredients: "",
+    preparation: "",
   };
 
-  // TODO: When the form is submitted, a new recipe should be created, and the form contents cleared.
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({ ...initialFormState });
+  const handleChange = ({ target }) => {
+    setFormData({ ...formData, [target.name]: target.value });
+  };
+
+  const handleSubmission = (event) => {
     event.preventDefault();
-    createRecipe(content);
-    setContent({...initialFormState});
+    createRecipe(formData);
+    setFormData({ ...initialFormState });
   };
-  // TODO: Add the required input and textarea form elements.
-  // TODO: Add the required submit and change handlers
+
   return (
-    <form name="create" onSubmit={handleSubmit}>
+    <form name="create" onSubmit={handleSubmission}>
       <table>
         <tbody>
           <tr>
-            <td className="createTenPercent">
+            <td>
               <input
                 id="name"
                 name="name"
                 type="text"
                 placeholder="Name"
+                required={true}
                 onChange={handleChange}
-                value={content.name}
+                value={formData.name}
+                size="10"
               />
             </td>
-            <td className="createTenPercent">
+            <td>
               <input
                 id="cuisine"
                 name="cuisine"
                 type="text"
                 placeholder="Cuisine"
+                required={true}
                 onChange={handleChange}
-                value={content.cuisine}
+                value={formData.cuisine}
+                size="10"
               />
             </td>
-            <td className="createTenPercent">
+            <td>
               <input
                 id="photo"
                 name="photo"
-                type="text"
-                placeholder="Photo"
+                type="url"
+                placeholder="URL"
+                required={true}
                 onChange={handleChange}
-                value={content.photo}
+                value={formData.photo}
+                size="10"
               />
             </td>
-            <td className="content_td createThirtyPercent">
+            <td>
               <textarea
                 id="ingredients"
                 name="ingredients"
                 type="text"
                 placeholder="Ingredients"
+                required={true}
                 onChange={handleChange}
-                value={content.ingredients}
+                value={formData.ingredients}
               />
             </td>
-            <td className="content_td createThirtyPercent">
+            <td>
               <textarea
                 id="preparation"
                 name="preparation"
                 type="text"
                 placeholder="Preparation"
+                required={true}
                 onChange={handleChange}
-                value={content.preparation}
+                value={formData.preparation}
               />
             </td>
-            <td className="createLast">
+            <td>
               <button type="submit">Create</button>
             </td>
           </tr>
@@ -95,4 +94,3 @@ function RecipeCreate({createRecipe}) {
 }
 
 export default RecipeCreate;
-
